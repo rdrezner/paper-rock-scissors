@@ -1,0 +1,13 @@
+.gameRule {
+  font-size: 25px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldValidation {
+  color: red;
+  font-size: 10px;
+}

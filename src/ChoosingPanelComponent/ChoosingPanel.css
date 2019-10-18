@@ -1,0 +1,11 @@
+.iconsContainer {
+  display: flex;
+}
+
+.icon {
+  border: 2px solid white;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  margin: 15px;
+}
