@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./ChoosingPanel.css";
 import { iconArr } from "../utils/arrays";
 
-const ChoosingPanel = ({ countGameScores, isInputValid }) => {
+const ChoosingPanel = ({ countGameScores, isInputValid, isEndOfGame }) => {
   const handleOnClick = player1Icon => {
-    isInputValid && countGameScores(player1Icon);
+    isInputValid && !isEndOfGame && countGameScores(player1Icon);
   };
 
   return (

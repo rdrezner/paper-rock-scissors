@@ -6,16 +6,14 @@ import ChoosingPanel from "./ChoosingPanelComponent/ChoosingPanel";
 import ResultComponent from "./ResultComponent/ResultComponent";
 import { iconArr, possibilities } from "./utils/arrays";
 
-let numberOfWins = 0;
-let numberOfLosses = 0;
-let numberOfDraws = 0;
-
 function App() {
   const [value, setValue] = useState("");
   const [player1IconType, setPlayer1IconType] = useState(faQuestionCircle);
   const [computerIconType, setComputerIconType] = useState(faQuestionCircle);
-  const [score, setScore] = useState(null);
   const [isInputValid, setValidationOfInput] = useState(null);
+  let [numberOfWins, setNumberOfWins] = useState(0);
+  let [numberOfLosses, setNumberOfLosses] = useState(0);
+  let [numberOfDraws, setNumberOfDraws] = useState(0);
 
   const setPlayersIcons = (player1IconType, randomIndex) => {
     setPlayer1IconType(player1IconType);
@@ -32,14 +30,11 @@ function App() {
     const indexOfComputerChoice = randomIndex;
 
     const result = possibilities[indexOfComputerChoice][indexOfUserChoice];
-
-    result !== "DRAW" && (result === "WIN" ? numberOfWins++ : numberOfLosses++);
-    result === "DRAW" && numberOfDraws++;
-    setScore({
-      wins: numberOfWins,
-      losses: numberOfLosses,
-      draw: numberOfDraws
-    });
+    result !== "DRAW" &&
+      (result === "WIN"
+        ? setNumberOfWins(++numberOfWins)
+        : setNumberOfLosses(++numberOfLosses));
+    result === "DRAW" && setNumberOfDraws(++numberOfDraws);
   };
 
   const validateInput = value => {
@@ -47,11 +42,24 @@ function App() {
     const isOnlyNumber = regex.test(Number(value));
     setValidationOfInput(value && isOnlyNumber);
   };
+
+  const resetGame = () => {
+    setValue("");
+    setValidationOfInput(false);
+    setPlayer1IconType(faQuestionCircle);
+    setComputerIconType(faQuestionCircle);
+    setNumberOfWins(0);
+    setNumberOfLosses(0);
+    setNumberOfDraws(0);
+  };
+
   const handleOnChage = e => {
+    resetGame();
     setValue(e.target.value);
     validateInput(e.target.value);
   };
-
+  const numberOfGames = numberOfWins + numberOfLosses + numberOfDraws;
+  const isEndOfGame = numberOfGames !== 0 && numberOfGames === Number(value);
   return (
     <div className="App">
       <header className="AppContainer">
@@ -61,17 +69,26 @@ function App() {
           isInputValid={isInputValid}
         />
         <ResultComponent
-          value={value}
-          score={score}
+          numberOfGames={numberOfGames}
+          score={{
+            wins: numberOfWins,
+            losses: numberOfLosses,
+            draw: numberOfDraws
+          }}
           player1IconType={player1IconType}
           computerIconType={computerIconType}
+          isEndOfGame={isEndOfGame}
         />
         <ChoosingPanel
           setPlayer1IconType={setPlayer1IconType}
           setComputerIconType={setComputerIconType}
           countGameScores={countGameScores}
           isInputValid={isInputValid}
+          isEndOfGame={isEndOfGame}
         />
+        <p className="paragraph">
+          If you want to start game from the begining, change value in input
+        </p>
       </header>
     </div>
   );

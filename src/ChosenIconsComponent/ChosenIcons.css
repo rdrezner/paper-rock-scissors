@@ -1,7 +1,6 @@
 .chosenIconsContainer {
   display: flex;
   justify-content: space-between;
-  /* margin-bottom: 4em; */
 }
 
 .chosenIcons {
@@ -15,8 +14,3 @@
   align-items: center;
   margin: 30px;
 }
-
-/* .labelContainer {
-  display: flex;
-  justify-content: space-around;
-} */

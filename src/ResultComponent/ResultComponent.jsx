@@ -3,21 +3,20 @@ import ScoreComponent from "../ScoreComponent/ScoreComponent";
 import ChosenIcons from "../ChosenIconsComponent/ChosenIcons";
 
 const ResultComponent = ({
-  value,
   score,
   player1IconType,
-  computerIconType
+  computerIconType,
+  isEndOfGame,
+  numberOfGames
 }) => {
-  const numberOfGames = score && score.wins + score.losses + score.draw;
   return (
     <>
+      <p>{numberOfGames !== 0 && `Round: ${numberOfGames}`}</p>
       <ChosenIcons
         player2IconType={computerIconType}
         player1IconType={player1IconType}
       />
-      {value && numberOfGames === Number(value) && (
-        <ScoreComponent score={score} />
-      )}
+      {isEndOfGame && <ScoreComponent score={score} />}
     </>
   );
 };
